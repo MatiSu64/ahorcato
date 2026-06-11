@@ -7,23 +7,29 @@
 <style>
     #ahorcato-container { 
         font-family: sans-serif; text-align: center; padding: 20px; 
-        background: #f9f9f9; border: 2px solid #ddd; border-radius: 15px;
-        max-width: 400px; margin: auto;
+        background: #bdbdbd;
+        margin: 0;
+        padding: 20px;
+        max-width: 700px;
+        width: 95%;
     }
     .oculto { display: none; }
-    #logo-catto { width: 120px; margin-bottom: 10px; border-radius: 50%; }
-    #palabra-display { font-size: 1.8em; letter-spacing: 5px; margin: 15px 0; font-weight: bold; }
+    #logo-catto { width: 180px; margin-bottom: 10px; border-radius: 50%; }
+    #palabra-display { font-size: 3em; letter-spacing: 5px; margin: 15px 0; font-weight: bold; }
     .traduccion { color: #666; font-size: 0.9em; font-style: italic; }
-    input { width: 50px; padding: 10px; text-align: center; font-size: 1.2em; }
-    button { cursor: pointer; padding: 10px 20px; background: #6200ea; color: white; border: none; border-radius: 5px; }
+    input { width: 80px; padding: 15px; text-align: center; font-size: 1.6em; }
+    button { cursor: pointer; padding: 15px 30px; background: #6200ea; color: white; border: none; border-radius: 5px; }
 </style>
 
 <div id="ahorcato-container">
     <div id="menu">
         <img id="logo-catto" src="catto.png" alt="Logo Catto">
-        <h3>Welcome to Ahorcato!</h3>
+        <h2>Welcome to Ahorcato!</h2>
         <p class="traduccion">(¡Bienvenido a Ahorcato!)</p>
         <button onclick="iniciarJuego()">Start Game (Empezar)</button>
+        <p style="margin-top:20px;color:#555;font-size:1.1em;">
+            Colombo americano 2026©
+        </p>
     </div>
 
     <div id="juego" class="oculto">
@@ -95,4 +101,5 @@
             location.reload();
         }
     }
+
 </script>
