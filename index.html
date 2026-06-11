@@ -1,0 +1,92 @@
+<style>
+    #ahorcato-container { 
+        font-family: sans-serif; text-align: center; padding: 20px; 
+        background: #f9f9f9; border: 2px solid #ddd; border-radius: 15px;
+        max-width: 400px; margin: auto;
+    }
+    .oculto { display: none; }
+    #logo-catto { width: 120px; margin-bottom: 10px; border-radius: 50%; }
+    #palabra-display { font-size: 1.8em; letter-spacing: 5px; margin: 15px 0; font-weight: bold; }
+    .traduccion { color: #666; font-size: 0.9em; font-style: italic; }
+    input { width: 50px; padding: 10px; text-align: center; font-size: 1.2em; }
+    button { cursor: pointer; padding: 10px 20px; background: #6200ea; color: white; border: none; border-radius: 5px; }
+</style>
+
+<div id="ahorcato-container">
+    <div id="menu">
+        <img id="logo-catto" src="catto.png" alt="Logo Catto">
+        <h3>Welcome to Ahorcato!</h3>
+        <p class="traduccion">(¡Bienvenido a Ahorcato!)</p>
+        <button onclick="iniciarJuego()">Start Game (Empezar)</button>
+    </div>
+
+    <div id="juego" class="oculto">
+        <div id="palabra-display"></div>
+        <input type="text" id="letra" maxlength="1" placeholder="Letter">
+        <button onclick="adivinar()">Guess (Adivinar)</button>
+        <p id="mensajes">Attempts left (Intentos): <span id="intentos">6</span></p>
+    </div>
+</div>
+
+<script>
+    const palabras = [
+        "apple", "beach", "bread", "chair", "cloud", "dance", "dream", "earth", "field", "fruit",
+        "ghost", "glass", "green", "happy", "heart", "house", "juice", "light", "lunch", "music",
+        "night", "ocean", "party", "phone", "piano", "pizza", "plant", "radio", "river", "sheep",
+        "smile", "space", "spoon", "storm", "sugar", "table", "teeth", "tiger", "touch", "train",
+        "water", "whale", "world", "write", "young", "zebra", "angel", "angry", "birds", "black",
+        "blood", "board", "brain", "brown", "build", "candy", "check", "child", "clean", "clock",
+        "cloth", "coach", "coast", "color", "count", "court", "cover", "cross", "daily", "death",
+        "depth", "drink", "drive", "early", "empty", "entry", "event", "extra", "faith", "false",
+        "fault", "field", "fight", "final", "floor", "focus", "force", "frame", "front", "funny",
+        "giant", "given", "glass", "glove", "going", "grade", "grand", "grass", "great", "green",
+        "group", "guard", "guest", "guide", "habit", "happy", "heavy", "hello", "honey", "horse",
+        "hotel", "house", "human", "ideal", "image", "index", "inner", "input", "issue", "joint",
+        "judge", "knife", "known", "label", "large", "later", "laugh", "layer", "learn", "least",
+        "level", "light", "limit", "liver", "local", "logic", "loose", "lower", "lucky", "lunch",
+        "magic", "major", "maker", "march", "match", "maybe", "mayor", "media", "metal", "meter",
+        "might", "minor", "money", "month", "moral", "motor", "mount", "mouse", "mouth", "movie",
+        "music", "night", "noise", "north", "novel", "nurse", "ocean", "offer", "often", "order",
+        "other", "outer", "paint", "panel", "paper", "party", "peace", "phase", "phone", "piece",
+        "pilot", "pitch", "place", "plain", "plane", "plant", "plate", "point", "pound", "power"
+    ];
+    
+    let palabraSeleccionada = "";
+    let letrasAdivinadas = [];
+    let intentos = 6;
+
+    function iniciarJuego() {
+        document.getElementById('menu').style.display = 'none';
+        document.getElementById('juego').style.display = 'block';
+        palabraSeleccionada = palabras[Math.floor(Math.random() * palabras.length)];
+        actualizarDisplay();
+    }
+
+    function actualizarDisplay() {
+        let display = palabraSeleccionada.split('').map(l => letrasAdivinadas.includes(l) ? l : '_').join(' ');
+        document.getElementById('palabra-display').innerText = display;
+    }
+
+    function adivinar() {
+        let input = document.getElementById('letra');
+        let letra = input.value.toLowerCase();
+        if (letra && /^[a-z]$/.test(letra)) {
+            if (palabraSeleccionada.includes(letra)) {
+                if(!letrasAdivinadas.includes(letra)) letrasAdivinadas.push(letra);
+            } else {
+                intentos--;
+                document.getElementById('intentos').innerText = intentos;
+            }
+        }
+        input.value = '';
+        actualizarDisplay();
+        
+        if (!document.getElementById('palabra-display').innerText.includes('_')) {
+            alert("You win! (¡Ganaste!)");
+            location.reload();
+        } else if (intentos <= 0) {
+            alert("Game over! The word was: " + palabraSeleccionada + " (Fin del juego, la palabra era: " + palabraSeleccionada + ")");
+            location.reload();
+        }
+    }
+</script>
