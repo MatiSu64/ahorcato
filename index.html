@@ -14,17 +14,12 @@ body{
 #ahorcato-container{
     font-family:sans-serif;
     text-align:center;
-
     background:#bdbdbd;
-
     width:99%;
     max-width:none;
     min-height:1400px;
-
     margin:10px auto;
-
     padding:100px;
-
     border-radius:35px;
     box-sizing:border-box;
 }
@@ -60,29 +55,21 @@ h2{
 input{
     width:400px;
     height:280px;
-
     font-size:10em;
     text-align:center;
-
     border-radius:25px;
     border:4px solid #666;
-
     margin:20px;
 }
 
 button{
     cursor:pointer;
-
     min-width:800px;
     min-height:200px;
-
     padding:50px 100px;
-
     font-size:6em;
-
     background:#6200ea;
     color:white;
-
     border:none;
     border-radius:25px;
 }
@@ -90,6 +77,13 @@ button{
 #mensajes{
     font-size:5em;
     margin-top:50px;
+}
+
+/* 🔥 NUEVO: letras usadas */
+#letras-usadas{
+    font-size:4em;
+    margin-top:40px;
+    color:#333;
 }
 
 /* Ajuste para pantallas más pequeñas */
@@ -132,6 +126,10 @@ button{
     #mensajes{
         font-size:2.5em;
     }
+
+    #letras-usadas{
+        font-size:2em;
+    }
 }
 </style>
 </head>
@@ -170,7 +168,12 @@ button{
 
         <p id="mensajes">
             Attempts left (Intentos):
-            <span id="intentos">15</span>
+            <span id="intentos">6</span>
+        </p>
+
+        <!-- 🔥 NUEVO: letras usadas -->
+        <p id="letras-usadas">
+            Letters used (Letras usadas): <span id="usadas"></span>
         </p>
 
     </div>
@@ -202,7 +205,8 @@ const palabras = [
 
 let palabraSeleccionada = "";
 let letrasAdivinadas = [];
-let intentos = 15;
+let letrasUsadas = [];
+let intentos = 6;
 
 function iniciarJuego() {
     document.getElementById("menu").style.display = "none";
@@ -212,9 +216,11 @@ function iniciarJuego() {
         palabras[Math.floor(Math.random() * palabras.length)];
 
     letrasAdivinadas = [];
-    intentos = 15;
+    letrasUsadas = [];
+    intentos = 6;
 
     document.getElementById("intentos").innerText = intentos;
+    document.getElementById("usadas").innerText = "";
 
     actualizarDisplay();
 }
@@ -235,6 +241,13 @@ function adivinar() {
 
     if (letra && /^[a-z]$/.test(letra)) {
 
+        if (!letrasUsadas.includes(letra)) {
+            letrasUsadas.push(letra);
+        }
+
+        document.getElementById("usadas").innerText =
+            letrasUsadas.join(" ");
+
         if (palabraSeleccionada.includes(letra)) {
 
             if (!letrasAdivinadas.includes(letra)) {
@@ -245,7 +258,6 @@ function adivinar() {
 
             intentos--;
             document.getElementById("intentos").innerText = intentos;
-
         }
     }
 
